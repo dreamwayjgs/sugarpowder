@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(
     name="sugarpowder",
@@ -7,7 +7,8 @@ setup(
     author="Geunseong Jung",
     author_email="dreamwayjgs@gmail.com",
     license="MIT License",
-    packages=["sugarpowder"],
+    package_dir={"": "src"},
+    packages=find_packages("src", exclude=["test"]),
     zip_safe=False,
     install_requires=[],
 )
