@@ -1,2 +1,7 @@
 name: Base Workflow
-# Nothing to do because they are all syntactic sugars.
+on: push
+jobs:
+  echo:
+    runs-on: python:3.10
+    steps:
+      - run: "pip install pytest && pytest test.py"
