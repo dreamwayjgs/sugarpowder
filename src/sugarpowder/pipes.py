@@ -17,6 +17,7 @@ import builtins
 from typing import Any, Callable, Generator, Generic, Iterable, ParamSpec, TypeVar
 
 T = TypeVar("T")
+S = TypeVar("S")
 P = ParamSpec("P")
 
 
@@ -155,7 +156,7 @@ def tee(iterable):
 
 
 @Pipe
-def select(iterable: Iterable[T], selector: Callable[[T], Any]) -> "builtins.map[T]":
+def select(iterable: Iterable[T], selector: Callable[[T], S]) -> "builtins.map[S]":
     return builtins.map(selector, iterable)
 
 

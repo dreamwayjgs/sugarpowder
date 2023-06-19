@@ -1,5 +1,6 @@
 from sugarpowder.witherr import witherr, Witherr
 from sugarpowder.pipes import take, select, where, tolist, tail
+from sugarpowder.mark_time import mark_time
 
 
 @witherr
@@ -42,5 +43,15 @@ def test_pipes():
     arr_last2 = arr >> tail(2) >> tolist
     assert arr_last2 == [4, 5]
 
+    # arr_powered = filter(lambda x: x % 2 == 0, arr)
+    # arr_powered = list(map(lambda x: x**2, arr_powered))
+
     arr_powered = arr >> where(lambda x: x % 2 == 0) >> select(lambda x: x**2) >> tolist
     assert arr_powered == [4, 16]
+
+
+if __name__ == "__main__":
+    print("Run Tests")
+    s = mark_time()
+    test_pipes()
+    mark_time(s, "Test pipes")
