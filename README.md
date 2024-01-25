@@ -1,6 +1,10 @@
 # sugarpowder
-Package of Python syntactic sugars inspired by Elixir, Go, Rust, Julia, and other languages
+Package of Python syntactic sugars and utils inspired by Elixir, Go, Rust, Julia, and other languages
 
+
+## Utils
+
+df_to_parquetstream, parquetstream_to_df: Convert pandas Dataframe <--> parquetfile bytes stream
 
 ## WithErr
 Go lang Style error handling
@@ -27,5 +31,3 @@ val, err = div1(1, 0)
 Forked from [Pipe Package](https://github.com/JulienPalard/Pipe)
 
 It works on '|' and '>>' both.
-
-Pipes for pandas DataFrame are in development.
