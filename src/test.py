@@ -1,6 +1,10 @@
 from sugarpowder.witherr import witherr, Witherr
 from sugarpowder.pipes import take, select, where, tolist, tail
 from sugarpowder.mark_time import mark_time
+from sugarpowder.utils import df_to_parquetstream, parquetstream_to_df
+from datetime import datetime
+import pandas as pd
+from pandas.testing import assert_frame_equal
 
 
 @witherr
@@ -48,6 +52,22 @@ def test_pipes():
 
     arr_powered = arr >> where(lambda x: x % 2 == 0) >> select(lambda x: x**2) >> tolist
     assert arr_powered == [4, 16]
+
+
+def test_df_parquetstream():
+    X = [1, 2, 3, 4]
+    Y = ["a", "b", "c", "d"]
+    Z = [datetime(2020, 1, 1), datetime(2020, 1, 2), datetime(2020, 1, 3), datetime(2020, 1, 4)]
+
+    df = pd.DataFrame({"X": X, "Y": Y, "Z": Z})
+    pq = df_to_parquetstream(df)
+    ndf = parquetstream_to_df(pq)
+
+    try:
+        assert_frame_equal(df, ndf)
+        assert True
+    except:
+        assert False, "Frame Eqaul Failed"
 
 
 if __name__ == "__main__":
