@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "sugarpowder"
-version = "0.2.0"
+version = "1.3.0"
 authors = [
   { name="Geunseong Jung", email="dreamwayjgs@gmail.com" },
 ]
@@ -13,7 +13,9 @@ readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
   "pandas>=2.0.0",
-  "pyarrow"
+  "pyarrow",
+  "blosc",
+  "dill",
 ]
 license = {file = "LICENSE"}
 classifiers = [
@@ -24,4 +26,4 @@ classifiers = [
 
 [project.urls]
 "Homepage" = "https://github.com/dreamwayjgs/sugarpowder"
-"Bug Tracker" = "https://github.com/pypa/sampleproject/issues"
+"Bug Tracker" = "https://github.com/dreamwayjgs/sugarpowder/issues"

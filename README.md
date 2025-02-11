@@ -1,10 +1,25 @@
 # sugarpowder
 Package of Python syntactic sugars and utils inspired by Elixir, Go, Rust, Julia, and other languages
 
+## Install
+```
+pip install sugarpowder
+```
+
+## Test
+```
+tox
+```
+
+## Serialization: Compressed Pickle, Parquet, etc.
+
+blose_pickle, blose_unpickle: Convert any Python objects to pickle that compressed with blosc
+
+df_to_parquetstream, parquetstream_to_df: Convert pandas Dataframe <--> parquetfile bytes stream
 
 ## Utils
 
-df_to_parquetstream, parquetstream_to_df: Convert pandas Dataframe <--> parquetfile bytes stream
+deduplist
 
 ## WithErr
 Go lang Style error handling
@@ -27,7 +42,7 @@ val, err = div1(1, 0)
 ```
 
 
-## Pipe
+## Pipe (Depreacted)
 Forked from [Pipe Package](https://github.com/JulienPalard/Pipe)
 
 It works on '|' and '>>' both.
