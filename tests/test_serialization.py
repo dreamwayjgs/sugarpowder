@@ -7,10 +7,16 @@ import pytest
 from pandas.testing import assert_frame_equal
 
 from sugarpowder.serialization import (
+    base64_to_df,
     blosc_dill,
     blosc_pickle,
     blosc_undill,
     blosc_unpickle,
+    df_to_base64,
+    df_to_hex,
+    df_to_parquetstream,
+    hex_to_df,
+    parquetstream_to_df,
 )
 
 
@@ -30,6 +36,21 @@ def sample_df():
         "Y": ["a", "b", "c"],
         "Z": [datetime(2020, 1, 1), datetime(2020, 1, 2), datetime(2020, 1, 3)],
     })
+
+
+def test_parquetstream_roundtrip():
+    df = sample_df()
+    assert_frame_equal(df, parquetstream_to_df(df_to_parquetstream(df)))
+
+
+def test_hex_roundtrip():
+    df = sample_df()
+    assert_frame_equal(df, hex_to_df(df_to_hex(df)))
+
+
+def test_base64_roundtrip():
+    df = sample_df()
+    assert_frame_equal(df, base64_to_df(df_to_base64(df)))
 
 
 def test_blosc_pickle_dataframe():

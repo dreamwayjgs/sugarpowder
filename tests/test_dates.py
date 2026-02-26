@@ -2,27 +2,24 @@ from datetime import datetime
 
 import pandas as pd
 
-from sugarpowder.dates import daterange, summary_date
+from sugarpowder.dates import date_stats
 
 
-def test_daterange_default_length():
-    result = daterange(datetime(2024, 1, 1))
-    assert len(result) == 7
-
-
-def test_daterange_custom_days():
-    result = daterange(datetime(2024, 1, 1), days=3)
-    assert len(result) == 3
-    assert result[0] == datetime(2024, 1, 1)
-    assert result[1] == datetime(2024, 1, 2)
-    assert result[2] == datetime(2024, 1, 3)
-
-
-def test_summary_date():
+def test_date_stats():
     df = pd.DataFrame({
         "date": [datetime(2024, 1, 1), datetime(2024, 1, 3), datetime(2024, 1, 3), datetime(2024, 1, 5)],
     })
-    min_date, max_date, nunique = summary_date(df)
-    assert min_date == datetime(2024, 1, 1)
-    assert max_date == datetime(2024, 1, 5)
-    assert nunique == 3
+    result = date_stats(df)
+    assert result.min == datetime(2024, 1, 1)
+    assert result.max == datetime(2024, 1, 5)
+    assert result.nunique == 3
+
+
+def test_date_stats_custom_col():
+    df = pd.DataFrame({
+        "created_at": [datetime(2024, 3, 1), datetime(2024, 3, 5)],
+    })
+    result = date_stats(df, date_col="created_at")
+    assert result.min == datetime(2024, 3, 1)
+    assert result.max == datetime(2024, 3, 5)
+    assert result.nunique == 2

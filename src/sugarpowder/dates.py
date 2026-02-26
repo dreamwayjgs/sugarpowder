@@ -1,10 +1,17 @@
-from datetime import datetime, timedelta
+from typing import NamedTuple
 
 import pandas as pd
 
 
-def daterange(base: datetime = datetime.now(), days=7):
-    return [base + timedelta(days=x) for x in range(days)]
+class DateStats(NamedTuple):
+    min: pd.Timestamp
+    max: pd.Timestamp
+    nunique: int
 
-def summary_date(df: pd.DataFrame, date_col: str='date'):
-    return df[date_col].min(), df[date_col].max(), df[date_col].nunique()
+
+def date_stats(df: pd.DataFrame, date_col: str = 'date') -> DateStats:
+    return DateStats(
+        min=df[date_col].min(),
+        max=df[date_col].max(),
+        nunique=df[date_col].nunique(),
+    )

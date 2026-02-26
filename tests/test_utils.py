@@ -5,18 +5,17 @@ from pathlib import Path
 import pandas as pd
 from pandas.testing import assert_frame_equal
 
-from sugarpowder.utils import (
-    df_to_parquetstream,
-    parquetstream_to_df,
-    df_to_hex,
-    hex_to_df,
-    df_to_base64,
+from sugarpowder.serialization import (
     base64_to_df,
-    deduplist,
-    deep_flatten,
-    fix_mac_hangul,
-    create_directory_recursive,
+    df_to_base64,
+    df_to_hex,
+    df_to_parquetstream,
+    hex_to_df,
+    parquetstream_to_df,
 )
+from sugarpowder.lists import dedup, deep_flatten
+from sugarpowder.strings import fix_mac_hangul
+from sugarpowder.fs import create_directory_recursive
 
 
 def sample_df():
@@ -42,20 +41,29 @@ def test_base64_roundtrip():
     assert_frame_equal(df, base64_to_df(df_to_base64(df)))
 
 
-def test_deduplist_keep_order():
-    result = deduplist([3, 1, 2, 1, 3])
-    assert result == [3, 1, 2]
+def test_dedup_primitives():
+    assert dedup([3, 1, 2, 1, 3]) == [3, 1, 2]
 
 
-def test_deduplist_no_order():
-    result = deduplist([3, 1, 2, 1, 3], keep_order=False)
-    assert set(result) == {1, 2, 3}
-    assert len(result) == 3
+def test_dedup_preserves_order():
+    assert dedup([3, 1, 2, 1, 3]) == [3, 1, 2]
+
+
+def test_dedup_with_key():
+    items = [{"id": 1, "name": "a"}, {"id": 1, "name": "b"}, {"id": 2, "name": "c"}]
+    assert dedup(items, key=lambda x: x["id"]) == [{"id": 1, "name": "a"}, {"id": 2, "name": "c"}]
+
+
+def test_dedup_unhashable():
+    items = [[1, 2], [3, 4], [1, 2]]
+    assert dedup(items) == [[1, 2], [3, 4]]
 
 
 def test_deep_flatten():
-    assert deep_flatten([[1, 2], [3, 4]]) == [1, 2]
-    assert deep_flatten([1, 2, 3]) == 1
+    assert deep_flatten([[1, 2], [3, 4]]) == [1, 2, 3, 4]
+    assert deep_flatten([[1, [2, 3]], [4]]) == [1, 2, 3, 4]
+    assert deep_flatten([1, [2, [3, [4]]]]) == [1, 2, 3, 4]
+    assert deep_flatten(["ab", ["cd"]]) == ["ab", "cd"]
     assert deep_flatten([]) == []
 
 
