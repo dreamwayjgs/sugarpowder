@@ -4,7 +4,7 @@ build-backend = "uv_build"
 
 [project]
 name = "sugarpowder"
-version = "2.0.0"
+version = "2.0.1"
 authors = [{ name = "Geunseong Jung", email = "dreamwayjgs@gmail.com" }]
 description = "A humble collection of Python utilities for data processing, serialization, and everyday patterns"
 readme = "README.md"
