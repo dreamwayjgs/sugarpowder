@@ -6,7 +6,7 @@ build-backend = "uv_build"
 name = "sugarpowder"
 version = "2.0.0"
 authors = [{ name = "Geunseong Jung", email = "dreamwayjgs@gmail.com" }]
-description = "Package for Python syntactic sugars inspired by Elixir, Go, Rust, Julia, and other languages"
+description = "A humble collection of Python utilities for data processing, serialization, and everyday patterns"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
